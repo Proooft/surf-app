@@ -1,0 +1,15 @@
+<div >
+    <google-map height="900px" width="100%" [options]="options">
+        <map-marker *ngFor="let marker of markers" #somemarker="mapMarker" [position]="marker.position"
+            [label]="marker.label" [title]="marker.title" [options]="marker.options"
+            (mapClick)="openInfo(somemarker,marker.markerInfo)"></map-marker>
+        <map-info-window>
+            <div>
+                <img style="max-width: 250px;" [src]="infoContent.picture">
+                <p>{{infoContent.nom}}</p>
+                <p>note: {{infoContent.rate}}/5</p>
+                <a class="waves-effect waves-light btn" (click)="goTospot(infoContent.id)">Détails</a>
+            </div>
+        </map-info-window>
+    </google-map>
+</div>

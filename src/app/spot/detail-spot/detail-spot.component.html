@@ -1,0 +1,46 @@
+<div *ngIf="spot" class="row">
+    <div class="col s12 m8 offset-m2">
+    <h2 class="header center white-text">{{ spot.nom }}</h2>
+    <div class="card horizontal hoverable">
+      <div class="card-image">
+        <img [src]="spot.picture">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <table class="bordered striped">
+            <tbody>
+              <tr>
+                <td>Nom</td>
+                <td><strong>{{ spot.nom }}</strong></td>
+              </tr>
+              <tr>
+                <td>Département</td>
+                <td><strong>{{ spot.departement }}</strong></td>
+              </tr>
+              <tr>
+                <td>Note</td>
+                <td><strong>{{ spot.rate }}</strong></td>
+              </tr>
+              <tr>
+                <td>Types</td>
+                <td>
+                  <span>{{ spot.type }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Date de création</td>
+                <td><em>{{ spot.created | date:"dd/MM/yyyy" }}</em></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-action">
+          <a (click)="goToSpotList()">Retour</a>
+          <a (click)="goToEditSpot(spot)">Editer</a>
+          <a (click)="deleteSpot(spot)">Supprimer</a>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <h4 *ngIf='!spot' class="center"><app-loader></app-loader></h4>

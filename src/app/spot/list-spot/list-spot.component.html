@@ -1,0 +1,28 @@
+
+  <div *ngIf="spotlist">
+  <app-search-spot></app-search-spot>
+      
+        <div class="container">
+          <div class="row">
+        <div class="col l4 m4 s6" *ngFor="let spot of spotlist">
+          <div class="card" (click)="goTospot(spot)">
+            <div class="card-image">
+              <img [src]="spot.picture">
+              <span class="card-title" style="width: 100%;color:#263d42">{{spot.nom}}</span>
+            </div>
+            <div class="card-content">
+              <p>{{spot.created | date: "dd/MM/yy" }}</p>
+              <p>{{spot.type}}</p>
+              <p>note: {{spot.rate}}/5</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+ </div>
+<div *ngIf="!spotlist" class="center"><app-loader></app-loader></div>
+     
+<a class="btn-floating btn-large waves-effect waves-light red z-depth-3" 
+    style="position:fixed; bottom: 25px; right: 25px"
+    routerLink="/spot/add">+</a>

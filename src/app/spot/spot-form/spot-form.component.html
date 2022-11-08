@@ -1,0 +1,68 @@
+<form *ngIf="spot" (ngSubmit)="onSubmit()" #spotForm="ngForm">
+  <div class="row">
+    <div class="col s8 offset-s2 l4 offset-l4">
+      <div class="card-panel">
+
+
+        <div class="form-group">
+          <label for="name">Nom</label>
+          <input type="text" class="form-control" id="name" required pattern="^[a-zA-Z0-9àéèç ]{1,25}$"
+            [(ngModel)]="spot.nom" name="name" #name="ngModel">
+          <div [hidden]="name.valid || name.pristine" class="card-panel red accent-1">
+            Le nom du Spot est requis (1-25).
+          </div>
+        </div>
+
+        <div *ngIf="isAddform" class="form-group">
+          <label for="name">Image</label>
+          <input type="url" class="form-control" id="picture" required [(ngModel)]="spot.picture" name="picture"
+            #picture="ngModel">
+          <div [hidden]="picture.valid || picture.pristine" class="card-panel red accent-1">
+            L'image du spot est requise.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type">Type</label>
+          <select #type="ngModel" name='type' class="browser-default" [(ngModel)]="spot.type">
+            <option *ngFor="let type of types" [value]="type">{{type}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="departement">Département</label>
+            <select class="browser-default" name="departement" [(ngModel)]="spot.departement">
+              <option  *ngFor="let departement of departements" [value]="departement" >{{departement}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+          <label for="rate">Note:</label>
+          <p style="color: #63C7B2; font-size: 2em;">{{spot.rate}}</p>
+          <input type="range" id="rate" name="rate" #rate = "ngModel"
+          min="0" max="5" step="0.1" [value]="0" [(ngModel)]="spot.rate" (ngModelChange)="valueChanged($event)">
+          <div [hidden]="rate.valid || rate.pristine" class="card-panel red accent-1">
+            Notez votre spot !
+          </div>
+        </div>
+        <div div *ngIf="isAddform" class="from-group">
+          <label for="localisation">Choisissez la localisation du spot:</label>
+            <div>
+              <google-map (mapClick)="addMarker($event)" width="100%" [options]="options">
+                  <map-marker *ngFor="let marker of markers" [position]="localisation"></map-marker>
+              </google-map>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="section center">
+          <button *ngIf="isAddform" type="submit" class="waves-effect waves-light btn" [disabled]="!spotForm.form.valid || !positionSelected">
+            Valider</button>
+          <button *ngIf="!isAddform" type="submit" class="waves-effect waves-light btn" [disabled]="!spotForm.form.valid">
+              Valider</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
+<h3 *ngIf="!spot" class="center">
+  <app-loader></app-loader>
+</h3>
